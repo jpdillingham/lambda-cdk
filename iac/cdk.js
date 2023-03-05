@@ -1,8 +1,27 @@
 #!/usr/bin/env node
 /* eslint-disable no-new */
 
+const fs = require('fs');
 const cdk = require('aws-cdk-lib');
 const { LambdaCdkStack } = require('./stack');
+
+// prepare the layer
+try {
+  if (fs.existsSync('layer')) {
+    console.log('layer exists. deleting.');
+    fs.rmSync('layer', { recursive: true, force: true });
+  }
+
+  console.log('creating layer directory structure');
+  fs.mkdirSync('layer/nodejs/node_modules', { recursive: true });
+
+  console.log('copying node_modules to layer');
+  fs.cpSync('node_modules', 'layer/nodejs/node_modules', { recursive: true });
+} catch (err) {
+  console.error(err);
+  console.error('unable to copy node_modules to the layer destination');
+  throw err;
+}
 
 const app = new cdk.App();
 new LambdaCdkStack(app, 'LambdaCdkStack', {

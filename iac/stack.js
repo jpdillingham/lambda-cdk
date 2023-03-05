@@ -1,5 +1,7 @@
+/* eslint-disable no-new */
 /* eslint-disable no-useless-constructor */
-const { Stack, Duration } = require('aws-cdk-lib');
+const { Stack } = require('aws-cdk-lib');
+const service = require('./service');
 
 class LambdaCdkStack extends Stack {
   /**
@@ -11,12 +13,7 @@ class LambdaCdkStack extends Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
-
-    // example resource
-    // const queue = new sqs.Queue(this, 'CdkTestQueue', {
-    //   visibilityTimeout: Duration.seconds(300)
-    // });
+    new service.Service(this, 'LambdaCdk');
   }
 }
 
