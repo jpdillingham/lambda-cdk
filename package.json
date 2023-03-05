@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Simple demonstration of how to deploy a lambda (with layer) with the AWS CDK and GitHub Actions",
   "main": "src/index.js",
+  "jest": {
+    "testPathIgnorePatterns": ["cdk.out"]
+  },
   "scripts": {
     "test": "jest ./src/* --coverage --silent",
     "test:verbose": "jest ./src/* --coverage",
