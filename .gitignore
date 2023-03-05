@@ -107,4 +107,4 @@ dist
 .cdk.staging
 cdk.out
 
-layer
+.layer

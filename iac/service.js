@@ -7,16 +7,16 @@ class Service extends Construct {
   constructor(scope, id) {
     super(scope, id);
 
-    const layerVersion = new lambda.LayerVersion(this, 'LambdaCdkLayer', {
+    const layer = new lambda.LayerVersion(this, 'LambdaCdkLayer', {
       removalPolicy: RemovalPolicy.DESTROY,
-      code: lambda.Code.fromAsset('layer'),
+      code: lambda.Code.fromAsset('.layer'),
     });
 
     const handler = new lambda.Function(this, 'LambdaCdk', {
       runtime: lambda.Runtime.NODEJS_18_X,
       code: lambda.Code.fromAsset('src'),
       handler: 'index.handler',
-      layers: [layerVersion],
+      layers: [layer],
     });
 
     const api = new apigateway.RestApi(this, 'lambda-cdk-api', {

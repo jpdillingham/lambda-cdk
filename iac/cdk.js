@@ -1,38 +1,17 @@
 #!/usr/bin/env node
 /* eslint-disable no-new */
 
-const fs = require('fs');
+const { execSync } = require('child_process');
 const cdk = require('aws-cdk-lib');
 const { LambdaCdkStack } = require('./stack');
 
-// prepare the layer
-try {
-  if (fs.existsSync('layer')) {
-    console.log('layer exists. deleting.');
-    fs.rmSync('layer', { recursive: true, force: true });
-  }
-
-  console.log('creating layer directory structure');
-  fs.mkdirSync('layer/nodejs/node_modules', { recursive: true });
-
-  console.log('copying node_modules to layer');
-  fs.cpSync('node_modules', 'layer/nodejs/node_modules', { recursive: true });
-} catch (err) {
-  console.error(err);
-  console.error('unable to copy node_modules to the layer destination');
-  throw err;
-}
+// the lambda layer is expecting a zip file with a root folder 'nodejs'
+// containing 'node_modules', and the zip needs to be under ~200mb unzipped
+// we'll use npm to create the structure and omit any dev dependencies
+// note that we'll need to refer to the '.layer' directory in the stack config
+console.log('⏳  Updating layer dependencies...\n');
+execSync('npm install --omit=dev --prefix ./.layer/nodejs', { stdio: 'inherit' });
+console.log('\n✨  Layer prepped!');
 
 const app = new cdk.App();
-new LambdaCdkStack(app, 'LambdaCdkStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+new LambdaCdkStack(app, 'LambdaCdkStack', {});
