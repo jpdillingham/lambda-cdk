@@ -5,7 +5,7 @@ const handler = async function (event) {
 
   return {
     statusCode: 200,
-    body: JSON.stringify(leftPad('hello, world!', 30)),
+    body: JSON.stringify(leftPad('hello, world?', 30)),
   };
 };
 
