@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const { Construct } = require('constructs');
 const apigateway = require('aws-cdk-lib/aws-apigateway');
 const lambda = require('aws-cdk-lib/aws-lambda');

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /* eslint-disable no-new */
+/* eslint-disable import/no-extraneous-dependencies */
 
 const { execSync } = require('child_process');
 const cdk = require('aws-cdk-lib');

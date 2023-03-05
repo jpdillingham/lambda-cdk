@@ -1,5 +1,6 @@
 /* eslint-disable no-new */
 /* eslint-disable no-useless-constructor */
+/* eslint-disable import/no-extraneous-dependencies */
 const { Stack } = require('aws-cdk-lib');
 const service = require('./service');
 
