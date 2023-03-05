@@ -27,10 +27,14 @@ It's safe to ignore slight differences in numbering; you're mostly checking to c
 
 If this is the first time you've used the CDK to make changes to your AWS account, you'll need to run [`cdk bootstrap`](https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html) to provision resources for the CDK.  You need to do this once for each AWS account you'll be using the CDK to manage.
 
-# Instructions
+# Local Instructions
 
 1. Clone this repo
 1. Run `npm install`
 1. Run `cdk deploy`
 
 The CDK should deploy a Lambda, Lambda Layer, and an API Gateway.  Among the output should be a URL; visit it in your browser and you should see a greeting!
+
+# GitHub Actions
+
+To deploy with GitHub Actions, fork this repository, then within the forked repo add an environment named 'prod' and add secrets `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.  The CDK stack should be updated whenever changes are pushed to the master branch.
