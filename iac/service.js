@@ -28,9 +28,7 @@ class Service extends Construct {
       requestTemplates: { 'application/json': '{ "statusCode": "200" }' },
     });
 
-    api.root.addMethod('GET', getLambdaIntegration, {
-      apiKeyRequired: true,
-    }); // GET /
+    api.root.addMethod('GET', getLambdaIntegration); // GET /
   }
 }
 
